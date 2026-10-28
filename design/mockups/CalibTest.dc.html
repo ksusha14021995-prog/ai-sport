@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — калибровка, тесты</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#9BE0C0}a:hover{color:#CFEBDD}
+button:focus-visible{outline:2px solid #9BE0C0;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #0D1411; color: #F2F5F1; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 20px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Calibration.dc.html" aria-label="Выйти из калибровки" style="width: 48px; height: 48px; margin-left: -8px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #F2F5F1; flex-shrink: 0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px" aria-label="{{stepLabel}}">
+      <sc-for list="{{segs}}" as="s" hint-placeholder-count="3">
+        <div style="{{s.style}}"></div>
+      </sc-for>
+    </div>
+    <span style="font-size: 13px; font-weight: 700; color: #B9C5BE; white-space: nowrap">{{stepLabel}}</span>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px">{{title}}</h1>
+  <p style="margin: 6px 0 0; font-size: 14px; color: #B9C5BE">{{sub}}</p>
+
+  <sc-if value="{{isPush}}" hint-placeholder-val="{{ false }}">
+    <div role="group" aria-label="Вариант отжиманий" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px">
+      <sc-for list="{{variants}}" as="v" hint-placeholder-count="2">
+        <button type="button" onClick="{{v.pick}}" aria-pressed="{{v.pressed}}" style="{{v.style}}">{{v.label}}</button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <div style="margin-top: 16px; flex-grow: 1; min-height: 0; border-radius: 28px; background: #1A2420; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden">
+    <div style="position: absolute; left: 0; right: 0; bottom: 56px; height: 1px; background: #2E3B35"></div>
+    <sc-if value="{{isSquat}}" hint-placeholder-val="{{ true }}">
+      <svg width="170" height="190" viewBox="0 0 220 240" fill="none" role="img" aria-label="Скелет в приседе">
+        <g stroke="#9BE0C0" stroke-width="6" stroke-linecap="round">
+          <line x1="110" y1="62" x2="104" y2="118"></line><line x1="80" y1="74" x2="140" y2="74"></line>
+          <line x1="80" y1="74" x2="64" y2="112"></line><line x1="64" y1="112" x2="46" y2="96"></line>
+          <line x1="140" y1="74" x2="158" y2="112"></line><line x1="158" y1="112" x2="176" y2="96"></line>
+          <line x1="104" y1="118" x2="82" y2="122"></line><line x1="104" y1="118" x2="128" y2="122"></line>
+          <line x1="82" y1="122" x2="62" y2="168"></line><line x1="128" y1="122" x2="150" y2="168"></line>
+          <line x1="62" y1="168" x2="72" y2="216"></line><line x1="150" y1="168" x2="140" y2="216"></line>
+        </g>
+        <circle cx="110" cy="40" r="18" stroke="#9BE0C0" stroke-width="5"></circle>
+      </svg>
+    </sc-if>
+    <sc-if value="{{isPush}}" hint-placeholder-val="{{ false }}">
+      <svg width="280" height="120" viewBox="0 0 280 120" fill="none" role="img" aria-label="Скелет в упоре лёжа">
+        <circle cx="236" cy="38" r="15" stroke="#9BE0C0" stroke-width="5"></circle>
+        <path d="M218 50L120 66L36 92M218 50L214 100M120 66L114 100" stroke="#9BE0C0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </sc-if>
+    <sc-if value="{{isPlank}}" hint-placeholder-val="{{ false }}">
+      <svg width="280" height="120" viewBox="0 0 280 120" fill="none" role="img" aria-label="Скелет в планке на предплечьях">
+        <circle cx="236" cy="52" r="15" stroke="#9BE0C0" stroke-width="5"></circle>
+        <path d="M216 64L124 72L36 92M216 64L206 100L240 100" stroke="#9BE0C0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="{{sagPath}}" stroke="#FF8A5C" stroke-width="14" stroke-linecap="round"></path>
+      </svg>
+    </sc-if>
+    <div style="position: absolute; left: 14px; top: 14px; background: rgba(13,20,17,0.8); border-radius: 16px; padding: 10px 14px" aria-live="polite">
+      <div style="font-size: 12px; color: #B9C5BE; font-weight: 600">{{bigLabel}}</div>
+      <div style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 34px; line-height: 1.1">{{big}}</div>
+    </div>
+    <div style="position: absolute; right: 14px; top: 14px; background: rgba(13,20,17,0.8); border-radius: 16px; padding: 10px 14px; text-align: right">
+      <div style="font-size: 12px; color: #B9C5BE; font-weight: 600">{{smallLabel}}</div>
+      <div style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px; margin-top: 4px">{{small}}</div>
+    </div>
+    <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; background: rgba(13,20,17,0.85); border-radius: 14px; padding: 10px 14px; font-size: 14px; font-weight: 600; text-align: center">{{hint}}</div>
+  </div>
+
+  <div style="margin-top: 16px">
+    <sc-if value="{{notLast}}" hint-placeholder-val="{{ true }}">
+      <button type="button" onClick="{{next}}" style="width: 100%; height: 56px; border-radius: 28px; border: 0; background: #9BE0C0; color: #0B3D2F; font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer">{{nextLabel}}</button>
+    </sc-if>
+    <sc-if value="{{isPlank}}" hint-placeholder-val="{{ false }}">
+      <a href="CalibDone.dc.html" style="height: 56px; border-radius: 28px; background: #9BE0C0; color: #0B3D2F; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Всё, отпускаю</a>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 0, tick: 0, reps: 0, errors: 0, variant: 'knees' };
+  }
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      const { step, tick, reps, errors } = this.state;
+      const t = tick + 1;
+      if (step === 0) {
+        if (t > 60) return;
+        const r = t % 2 === 0 ? reps + 1 : reps;
+        const e = (t === 18 || t === 40) ? errors + 1 : errors;
+        this.setState({ tick: t, reps: r, errors: e });
+      } else if (step === 1) {
+        this.setState({ tick: t, reps: t % 2 === 0 ? reps + 1 : reps });
+      } else {
+        this.setState({ tick: t, errors: t === 25 ? errors + 1 : errors });
+      }
+    }, 1000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  renderVals() {
+    const { step, tick, reps, errors, variant } = this.state;
+    const left = Math.max(60 - tick, 0);
+    const pad = (n) => (n < 10 ? '0' + n : String(n));
+    const titles = ['Приседания', 'Отжимания', 'Планка'];
+    const subs = ['Максимум за 60 секунд с правильной техникой', 'До отказа, в своём темпе', 'Держи, пока положение ровное'];
+    const sag = step === 2 && tick >= 25 && tick <= 28;
+    return {
+      stepLabel: 'Тест ' + (step + 1) + ' из 3',
+      segs: [0, 1, 2].map((i) => ({ style: 'height: 4px; border-radius: 2px; background: ' + (i <= step ? '#9BE0C0' : '#2E3B35') + ';' })),
+      title: titles[step], sub: subs[step],
+      isSquat: step === 0, isPush: step === 1, isPlank: step === 2,
+      notLast: step < 2,
+      bigLabel: step === 2 ? 'Время' : 'Повторы',
+      big: step === 2 ? Math.floor(tick / 60) + ':' + pad(tick % 60) : String(reps),
+      smallLabel: step === 0 ? 'Осталось' : (step === 1 ? 'Вариант' : 'Ошибки'),
+      small: step === 0 ? '0:' + pad(left) : (step === 1 ? (variant === 'floor' ? 'от пола' : 'с колен') : String(errors)),
+      hint: step === 0 ? (errors ? 'Ошибок техники: ' + errors + '. Такие повторы не засчитываем' : 'Камера считает только чистые повторы') : (step === 1 ? 'Остановись, когда не сможешь сделать ещё один чисто' : (sag ? 'Таз провисает — подтяни живот' : 'Ровная линия от головы до пяток')),
+      sagPath: sag ? 'M124 72l0 0' : '',
+      variants: [{ id: 'floor', label: 'От пола' }, { id: 'knees', label: 'С колен' }].map((v) => {
+        const on = v.id === variant;
+        return {
+          ...v, pressed: on ? 'true' : 'false',
+          style: 'min-height: 44px; border-radius: 22px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 700; ' + (on ? 'background: #9BE0C0; border: 0; color: #0B3D2F;' : 'background: transparent; border: 1px solid #6F7C74; color: #F2F5F1;'),
+          pick: () => this.setState({ variant: v.id })
+        };
+      }),
+      nextLabel: step === 0 ? (left === 0 ? 'Дальше: отжимания' : 'Закончить и дальше') : 'Не могу больше',
+      next: () => this.setState({ step: step + 1, tick: 0, reps: 0, errors: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>

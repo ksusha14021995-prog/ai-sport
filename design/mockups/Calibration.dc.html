@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — калибровочная тренировка</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 24px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Body.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -12px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px" aria-label="Шаг 5 из 5">
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; letter-spacing: -0.3px">Проверим твой уровень</h1>
+  <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: #4A5750">3 коротких теста, около 5 минут. По ним план начнётся с твоей нагрузки, а не с усреднённой.</p>
+
+  <ol style="list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+    <li style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start">
+      <span style="width: 36px; height: 36px; border-radius: 12px; background: #146C54; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 15px; flex-shrink: 0">1</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px">Приседания · 60 секунд</div>
+        <div style="font-size: 13px; color: #4A5750; margin-top: 3px; line-height: 1.4">Максимум повторов с правильной техникой. Камера считает и отмечает ошибки.</div>
+      </div>
+    </li>
+    <li style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start">
+      <span style="width: 36px; height: 36px; border-radius: 12px; background: #146C54; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 15px; flex-shrink: 0">2</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px">Отжимания · до отказа</div>
+        <div style="font-size: 13px; color: #4A5750; margin-top: 3px; line-height: 1.4">От пола или с колен — как тебе комфортнее.</div>
+      </div>
+    </li>
+    <li style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start">
+      <span style="width: 36px; height: 36px; border-radius: 12px; background: #146C54; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 15px; flex-shrink: 0">3</span>
+      <div>
+        <div style="font-weight: 700; font-size: 15px">Планка · на время</div>
+        <div style="font-size: 13px; color: #4A5750; margin-top: 3px; line-height: 1.4">Держи, пока положение остаётся ровным.</div>
+      </div>
+    </li>
+  </ol>
+
+  <div style="margin-top: 14px; background: #E3ECE5; border-radius: 18px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#146C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+    <p style="margin: 0; font-size: 13px; line-height: 1.45; color: #1F3A2E">Поставь телефон на уровне пояса в 2–3 шагах, чтобы в кадр попадало всё тело. Нужен коврик.</p>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <a href="CalibTest.dc.html" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Начать проверку</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

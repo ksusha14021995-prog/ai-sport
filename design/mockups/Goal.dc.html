@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — цель и возможности</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 24px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Screening.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -12px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px" aria-label="Шаг 3 из 5">
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; letter-spacing: -0.3px">Цель и возможности</h1>
+
+  <h2 style="margin: 20px 0 4px; font-size: 15px; font-weight: 700">Чего хочешь добиться в первую очередь?</h2>
+  <p style="margin: 0 0 10px; font-size: 13px; color: #4A5750">Можно выбрать несколько</p>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap">
+    <sc-for list="{{goals}}" as="g" hint-placeholder-count="5">
+      <button type="button" onClick="{{g.pick}}" aria-pressed="{{g.pressed}}" style="{{g.style}}">
+        <sc-if value="{{g.on}}" hint-placeholder-val="{{ false }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+        </sc-if>
+        {{g.label}}
+      </button>
+    </sc-for>
+  </div>
+
+  <h2 style="margin: 20px 0 10px; font-size: 15px; font-weight: 700">Как давно тренируешься регулярно?</h2>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{levels}}" as="l" hint-placeholder-count="4">
+      <button type="button" onClick="{{l.pick}}" aria-pressed="{{l.pressed}}" style="{{l.style}}">{{l.label}}</button>
+    </sc-for>
+  </div>
+  <p style="margin: 6px 0 0; font-size: 12px; color: #56635C">Регулярно — это минимум 2 раза в неделю</p>
+
+  <h2 style="margin: 18px 0 10px; font-size: 15px; font-weight: 700">Сколько дней в неделю?</h2>
+  <div style="display: flex; gap: 8px">
+    <sc-for list="{{days}}" as="d" hint-placeholder-count="4">
+      <button type="button" onClick="{{d.pick}}" aria-pressed="{{d.pressed}}" style="{{d.style}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <h2 style="margin: 18px 0 10px; font-size: 15px; font-weight: 700">Сколько минут на тренировку?</h2>
+  <div style="display: flex; gap: 8px">
+    <sc-for list="{{durs}}" as="d" hint-placeholder-count="4">
+      <button type="button" onClick="{{d.pick}}" aria-pressed="{{d.pressed}}" style="{{d.style}}">{{d.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <a href="Body.dc.html" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Дальше</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { goals: { tone: true }, level: 'none', days: '3', dur: '30' };
+  }
+  look(on) {
+    return on
+      ? 'background: #CFEBDD; border: 2px solid #146C54; color: #0B3D2F;'
+      : 'background: #FFFFFF; border: 1px solid #C9D2CB; color: #14201A; margin: 1px;';
+  }
+  single(key, options, extra) {
+    const current = this.state[key];
+    return options.map((o) => {
+      const on = o.id === current;
+      return {
+        ...o, pressed: on ? 'true' : 'false',
+        style: 'min-height: 44px; border-radius: 22px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; white-space: nowrap; ' + extra + this.look(on),
+        pick: () => this.setState({ [key]: o.id })
+      };
+    });
+  }
+  renderVals() {
+    const goals = this.state.goals;
+    const goalOpts = [
+      { id: 'lose', label: 'Снизить вес' },
+      { id: 'mass', label: 'Набрать массу' },
+      { id: 'strong', label: 'Стать сильнее' },
+      { id: 'endure', label: 'Повысить выносливость' },
+      { id: 'tone', label: 'Общий тонус' }
+    ];
+    return {
+      goals: goalOpts.map((o) => {
+        const on = !!goals[o.id];
+        return {
+          ...o, on, pressed: on ? 'true' : 'false',
+          style: 'display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 22px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; ' + this.look(on),
+          pick: () => this.setState({ goals: { ...goals, [o.id]: !on } })
+        };
+      }),
+      levels: this.single('level', [
+        { id: 'none', label: 'Не тренируюсь' },
+        { id: 'lt6', label: 'До 6 месяцев' },
+        { id: '6to24', label: '6–24 месяца' },
+        { id: 'gt2', label: 'Больше 2 лет' }
+      ], 'padding: 0 12px; '),
+      days: this.single('days', [
+        { id: '2', label: '2' }, { id: '3', label: '3' }, { id: '4', label: '4' }, { id: '5', label: '5+' }
+      ], 'flex: 1 1 0; min-width: 0; padding: 0; '),
+      durs: this.single('dur', [
+        { id: '15', label: '15' }, { id: '30', label: '30' }, { id: '45', label: '45' }, { id: '60', label: '60' }
+      ], 'flex: 1 1 0; min-width: 0; padding: 0; ')
+    };
+  }
+}
+</script>
+</body>
+</html>

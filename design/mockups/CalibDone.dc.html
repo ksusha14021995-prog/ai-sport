@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — итог калибровки</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 40px 24px 32px; overflow: hidden">
+  <h1 style="margin: 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; letter-spacing: -0.3px">Проверка пройдена</h1>
+  <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: #4A5750">Вот твоя точка старта. Через 2 недели повторим и сравним.</p>
+
+  <div style="margin-top: 20px; background: #FFFFFF; border-radius: 20px; padding: 4px 16px">
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 64px; border-bottom: 1px solid #E6EAE6">
+      <div style="flex-grow: 1"><div style="font-weight: 700; font-size: 15px">Приседания за 60 сек</div><div style="font-size: 13px; color: #B4471E; margin-top: 2px; font-weight: 600">2 ошибки техники</div></div>
+      <span style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px">24</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 64px; border-bottom: 1px solid #E6EAE6">
+      <div style="flex-grow: 1"><div style="font-weight: 700; font-size: 15px">Отжимания</div><div style="font-size: 13px; color: #4A5750; margin-top: 2px">с колен</div></div>
+      <span style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px">9</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 64px">
+      <div style="flex-grow: 1"><div style="font-weight: 700; font-size: 15px">Планка</div><div style="font-size: 13px; color: #B4471E; margin-top: 2px; font-weight: 600">1 раз провис таз</div></div>
+      <span style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px">0:42</span>
+    </div>
+  </div>
+
+  <h2 style="margin: 24px 0 4px; font-size: 15px; font-weight: 700" id="cd-hard">Насколько было тяжело?</h2>
+  <p style="margin: 0 0 10px; font-size: 13px; color: #4A5750">1 — совсем легко, 10 — на пределе</p>
+  <div role="group" aria-labelledby="cd-hard" style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{scale}}" as="s" hint-placeholder-count="10">
+      <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="{{s.style}}">{{s.n}}</button>
+    </sc-for>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <sc-if value="{{picked}}" hint-placeholder-val="{{ true }}">
+    <a href="Safety.dc.html" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Составить план</a>
+  </sc-if>
+  <sc-if value="{{notPicked}}" hint-placeholder-val="{{ false }}">
+    <div aria-disabled="true" style="height: 56px; border-radius: 28px; background: #DDE3DE; color: #56635C; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center">Составить план</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { hard: null };
+  }
+  renderVals() {
+    const hard = this.state.hard;
+    return {
+      picked: hard !== null,
+      notPicked: hard === null,
+      scale: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => {
+        const on = n === hard;
+        return {
+          n, pressed: on ? 'true' : 'false',
+          style: 'height: 48px; border-radius: 16px; cursor: pointer; font-family: inherit; font-size: 16px; font-weight: 700; ' + (on ? 'background: #146C54; border: 0; color: #FFFFFF;' : 'background: #FFFFFF; border: 1px solid #C9D2CB; color: #14201A;'),
+          pick: () => this.setState({ hard: n })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

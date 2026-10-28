@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — регистрация</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+input:focus{outline:2px solid #146C54;outline-offset:1px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 24px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Main.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -12px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px" aria-label="Шаг 1 из 5">
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.3px">Создай аккаунт</h1>
+  <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.5; color: #4A5750">Чтобы план и прогресс сохранялись, даже если сменишь телефон.</p>
+
+  <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 32px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="su-email" style="font-size: 13px; font-weight: 600; color: #4A5750">Эл. почта</label>
+      <input id="su-email" type="email" placeholder="name@mail.ru" value="maria.k@mail.ru" style="height: 56px; box-sizing: border-box; border-radius: 16px; border: 1px solid #C9D2CB; background: #FFFFFF; padding: 0 16px; font-family: inherit; font-size: 16px; color: #14201A">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="su-pass" style="font-size: 13px; font-weight: 600; color: #4A5750">Пароль</label>
+      <div style="position: relative">
+        <input id="su-pass" type="{{passType}}" value="trenirovka2026" style="width: 100%; height: 56px; box-sizing: border-box; border-radius: 16px; border: 1px solid #C9D2CB; background: #FFFFFF; padding: 0 56px 0 16px; font-family: inherit; font-size: 16px; color: #14201A">
+        <button type="button" onClick="{{togglePass}}" aria-label="{{passLabel}}" style="position: absolute; right: 4px; top: 4px; width: 48px; height: 48px; border: 0; background: transparent; border-radius: 24px; cursor: pointer; color: #4A5750; display: flex; align-items: center; justify-content: center">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </button>
+      </div>
+      <span style="font-size: 12px; color: #56635C">Минимум 8 символов</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; background: #FFFFFF; border-radius: 16px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start">
+    <input id="su-consent" type="checkbox" checked="{{consent}}" onChange="{{toggleConsent}}" style="width: 22px; height: 22px; margin: 1px 0 0; accent-color: #146C54; flex-shrink: 0">
+    <label for="su-consent" style="font-size: 13px; line-height: 1.45; color: #2E3A33">Согласна на обработку персональных данных, включая данные о здоровье, чтобы подобрать безопасную программу. <a href="#" style="font-weight: 600">Политика конфиденциальности</a></label>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+
+  <sc-if value="{{consent}}" hint-placeholder-val="{{ true }}">
+    <a href="Screening.dc.html" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Дальше</a>
+  </sc-if>
+  <sc-if value="{{noConsent}}" hint-placeholder-val="{{ false }}">
+    <div aria-disabled="true" style="height: 56px; border-radius: 28px; background: #DDE3DE; color: #56635C; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center">Дальше</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { showPass: false, consent: true };
+  }
+  renderVals() {
+    const { showPass, consent } = this.state;
+    return {
+      passType: showPass ? 'text' : 'password',
+      passLabel: showPass ? 'Скрыть пароль' : 'Показать пароль',
+      togglePass: () => this.setState({ showPass: !showPass }),
+      consent: consent,
+      noConsent: !consent,
+      toggleConsent: () => this.setState({ consent: !consent })
+    };
+  }
+}
+</script>
+</body>
+</html>

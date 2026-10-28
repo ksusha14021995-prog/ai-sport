@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — напоминания</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 20px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 8px">
+    <a href="Progress.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -8px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <h1 style="margin: 0; font-size: 20px; font-weight: 800">Напоминания</h1>
+  </div>
+
+  <div style="margin-top: 12px; background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 2px 10px rgba(20,32,26,0.08)">
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #4A5750">
+      <span style="width: 18px; height: 18px; border-radius: 6px; background: #146C54"></span>AI-sport · {{previewTime}}
+    </div>
+    <div style="font-weight: 700; font-size: 15px; margin-top: 8px">Ноги и кор ждут — 30 минут</div>
+    <div style="font-size: 14px; color: #4A5750; margin-top: 2px">В прошлый раз техника 8,1. Попробуем побить?</div>
+  </div>
+  <div style="font-size: 12px; color: #4A5750; margin-top: 6px; text-align: center">Так будет выглядеть уведомление</div>
+
+  <div style="margin-top: 16px; background: #FFFFFF; border-radius: 20px; padding: 4px 16px">
+    <div style="display: flex; align-items: center; gap: 12px; min-height: 60px">
+      <label for="r-on" style="flex-grow: 1; font-weight: 700; font-size: 15px">Напоминать о тренировках</label>
+      <button id="r-on" type="button" role="switch" aria-checked="{{onAria}}" onClick="{{toggleOn}}" style="{{onTrack}}"><span style="{{onThumb}}"></span></button>
+    </div>
+  </div>
+
+  <sc-if value="{{on}}" hint-placeholder-val="{{ true }}">
+    <h2 style="margin: 18px 0 10px; font-size: 13px; font-weight: 700; color: #4A5750; text-transform: uppercase; letter-spacing: 0.6px">Дни</h2>
+    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+        <button type="button" onClick="{{d.toggle}}" aria-pressed="{{d.pressed}}" style="{{d.style}}">{{d.label}}</button>
+      </sc-for>
+    </div>
+
+    <h2 style="margin: 18px 0 10px; font-size: 13px; font-weight: 700; color: #4A5750; text-transform: uppercase; letter-spacing: 0.6px">Время</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+      <sc-for list="{{slots}}" as="s" hint-placeholder-count="3">
+        <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="{{s.style}}">
+          <span style="display: block; font-weight: 700; font-size: 15px">{{s.label}}</span>
+          <span style="display: block; font-size: 13px; margin-top: 2px">{{s.time}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 16px; background: #FFFFFF; border-radius: 20px; padding: 4px 16px">
+      <div style="display: flex; align-items: center; gap: 12px; min-height: 64px">
+        <label for="r-smart" style="flex-grow: 1">
+          <div style="font-weight: 700; font-size: 15px">Подбирать время само</div>
+          <div style="font-size: 12px; color: #4A5750; margin-top: 2px; line-height: 1.4">По тому, когда ты обычно тренируешься</div>
+        </label>
+        <button id="r-smart" type="button" role="switch" aria-checked="{{smartAria}}" onClick="{{toggleSmart}}" style="{{smartTrack}}"><span style="{{smartThumb}}"></span></button>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="flex-grow: 1"></div>
+  <p style="margin: 0 0 12px; font-size: 13px; line-height: 1.45; color: #4A5750; text-align: center">Не больше одного напоминания в день. Если пропустишь — не будем засыпать уведомлениями.</p>
+  <a href="Home.dc.html" style="height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Сохранить</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { on: true, smart: false, slot: 'eve', days: { 0: true, 2: true, 4: true } };
+  }
+  sw(on) {
+    return {
+      track: 'width: 52px; height: 32px; border-radius: 16px; border: 2px solid ' + (on ? '#146C54' : '#6F7C74') + '; background: ' + (on ? '#146C54' : '#E6EAE6') + '; position: relative; cursor: pointer; padding: 0; flex-shrink: 0;',
+      thumb: 'position: absolute; top: ' + (on ? '4px' : '6px') + '; left: ' + (on ? '24px' : '6px') + '; width: ' + (on ? '20px' : '16px') + '; height: ' + (on ? '20px' : '16px') + '; border-radius: 12px; background: ' + (on ? '#FFFFFF' : '#6F7C74') + ';'
+    };
+  }
+  renderVals() {
+    const { on, smart, slot, days } = this.state;
+    const a = this.sw(on), b = this.sw(smart);
+    const slots = [{ id: 'mor', label: 'Утро', time: '8:00' }, { id: 'day', label: 'Обед', time: '13:00' }, { id: 'eve', label: 'Вечер', time: '19:00' }];
+    const cur = slots.find((s) => s.id === slot);
+    return {
+      on,
+      onAria: on ? 'true' : 'false', onTrack: a.track, onThumb: a.thumb,
+      smartAria: smart ? 'true' : 'false', smartTrack: b.track, smartThumb: b.thumb,
+      toggleOn: () => this.setState({ on: !on }),
+      toggleSmart: () => this.setState({ smart: !smart }),
+      previewTime: smart ? 'в твоё обычное время' : cur.time,
+      days: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((label, i) => {
+        const d = !!days[i];
+        return {
+          label, pressed: d ? 'true' : 'false',
+          style: 'height: 44px; border-radius: 22px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 700; padding: 0; ' + (d ? 'background: #146C54; border: 0; color: #FFFFFF;' : 'background: #FFFFFF; border: 1px solid #C9D2CB; color: #14201A;'),
+          toggle: () => this.setState({ days: { ...days, [i]: !d } })
+        };
+      }),
+      slots: slots.map((s) => {
+        const sel = s.id === slot && !smart;
+        return {
+          ...s, pressed: sel ? 'true' : 'false',
+          style: 'min-height: 60px; border-radius: 16px; cursor: pointer; font-family: inherit; ' + (sel ? 'background: #CFEBDD; border: 2px solid #146C54; color: #0B3D2F;' : 'background: #FFFFFF; border: 1px solid #C9D2CB; color: #14201A; margin: 1px;'),
+          pick: () => this.setState({ slot: s.id, smart: false })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

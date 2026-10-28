@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — библиотека упражнений</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible,input:focus{outline:2px solid #146C54;outline-offset:1px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="flex-grow: 1; min-height: 0; padding: 24px 20px 0; display: flex; flex-direction: column">
+    <h1 style="margin: 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: -0.3px">Упражнения</h1>
+
+    <div style="position: relative; margin-top: 16px">
+      <label for="lib-q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Поиск упражнения</label>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56635C" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 16px; top: 14px"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+      <input id="lib-q" type="search" placeholder="Найти упражнение" style="width: 100%; height: 48px; box-sizing: border-box; border-radius: 24px; border: 0; background: #E6EBE6; padding: 0 16px 0 46px; font-family: inherit; font-size: 15px; color: #14201A">
+    </div>
+
+    <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px; overflow: hidden">
+      <sc-for list="{{shown}}" as="e" hint-placeholder-count="6">
+        <a href="Exercise.dc.html" style="display: flex; align-items: center; gap: 12px; background: #FFFFFF; border-radius: 18px; padding: 10px 14px 10px 10px; text-decoration: none; color: #14201A">
+          <div style="width: 52px; height: 52px; border-radius: 14px; background: #E3ECE5; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="2"></circle><path d="M12 7v6l-4 7M12 13l4 7M7 10h10"></path></svg>
+          </div>
+          <div style="flex-grow: 1; min-width: 0">
+            <div style="font-weight: 700; font-size: 15px">{{e.name}}</div>
+            <div style="font-size: 13px; color: #4A5750; margin-top: 2px">{{e.muscles}}</div>
+          </div>
+          <sc-if value="{{e.ai}}" hint-placeholder-val="{{ false }}">
+            <span style="background: #CFEBDD; color: #0B3D2F; border-radius: 10px; padding: 4px 8px; font-size: 12px; font-weight: 700">ИИ</span>
+          </sc-if>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="margin: 10px 20px 12px; font-size: 12px; color: #4A5750; display: flex; align-items: center; gap: 6px">
+    <span style="background: #CFEBDD; color: #0B3D2F; border-radius: 6px; padding: 1px 6px; font-weight: 700">ИИ</span>
+    — технику проверяет камера
+  </div>
+
+  <nav aria-label="Основная навигация" style="height: 80px; flex-shrink: 0; background: #FFFFFF; border-top: 1px solid #E6EAE6; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-top: 12px; box-sizing: border-box">
+    <a href="Home.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"></path></svg></span>Главная
+    </a>
+    <a href="Library.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #0B3D2F; font-size: 12px; font-weight: 700">
+      <span style="width: 64px; height: 32px; border-radius: 16px; background: #CFEBDD; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"></path></svg></span>Упражнения
+    </a>
+    <a href="Progress.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></span>Прогресс
+    </a>
+    <a href="Profile.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></span>Профиль
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'all' };
+  }
+  renderVals() {
+    const filter = this.state.filter;
+    const all = [
+      { name: 'Приседание', muscles: 'Бёдра, ягодицы', ai: true, tag: 'legs' },
+      { name: 'Отжимание от колен', muscles: 'Грудь, трицепс', ai: true, tag: 'arms' },
+      { name: 'Выпад назад', muscles: 'Бёдра, ягодицы', ai: true, tag: 'legs' },
+      { name: 'Планка', muscles: 'Мышцы кора', ai: true, tag: 'core' },
+      { name: 'Ягодичный мостик', muscles: 'Ягодицы, задняя поверхность', ai: false, tag: 'legs' },
+      { name: 'Птица-собака', muscles: 'Кор, спина', ai: false, tag: 'core' },
+      { name: 'Подъём на носки', muscles: 'Икры', ai: false, tag: 'legs' }
+    ];
+    const filters = [
+      { id: 'all', label: 'Все' }, { id: 'ai', label: 'С ИИ-проверкой' },
+      { id: 'legs', label: 'Ноги' }, { id: 'core', label: 'Кор' }, { id: 'arms', label: 'Руки' }
+    ];
+    return {
+      filters: filters.map((f) => {
+        const on = f.id === filter;
+        return {
+          ...f, pressed: on ? 'true' : 'false',
+          style: 'min-height: 40px; padding: 0 14px; border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; ' + (on ? 'background: #CFEBDD; border: 0; color: #0B3D2F;' : 'background: transparent; border: 1px solid #A9B5AE; color: #14201A;'),
+          pick: () => this.setState({ filter: f.id })
+        };
+      }),
+      shown: all.filter((e) => filter === 'all' || (filter === 'ai' ? e.ai : e.tag === filter))
+    };
+  }
+}
+</script>
+</body>
+</html>

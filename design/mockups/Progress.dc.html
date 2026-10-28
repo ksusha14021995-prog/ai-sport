@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — прогресс</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+  <div style="flex-grow: 1; min-height: 0; padding: 24px 20px 12px; display: flex; flex-direction: column">
+    <h1 style="margin: 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: -0.3px">Прогресс</h1>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px">
+      <div style="background: #FFFFFF; border-radius: 20px; padding: 16px">
+        <div style="font-size: 13px; color: #4A5750; font-weight: 600">Эта неделя</div>
+        <div style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px; margin-top: 8px">2 из 3</div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin-top: 10px" aria-hidden="true">
+          <div style="height: 6px; border-radius: 3px; background: #146C54"></div>
+          <div style="height: 6px; border-radius: 3px; background: #146C54"></div>
+          <div style="height: 6px; border-radius: 3px; background: #DDE3DE"></div>
+        </div>
+        <div style="font-size: 12px; color: #4A5750; margin-top: 8px">тренировок</div>
+      </div>
+      <div style="background: #FFFFFF; border-radius: 20px; padding: 16px">
+        <div style="font-size: 13px; color: #4A5750; font-weight: 600">Регулярность</div>
+        <div style="font-family: Unbounded, sans-serif; font-weight: 600; font-size: 22px; margin-top: 8px">2 недели</div>
+        <div style="font-size: 12px; color: #4A5750; margin-top: 8px; line-height: 1.4">подряд выполнен план — рекорд</div>
+      </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 16px; margin-top: 10px">
+      <div style="display: flex; align-items: baseline; justify-content: space-between">
+        <h2 style="margin: 0; font-size: 15px; font-weight: 800">Оценка техники</h2>
+        <span style="font-size: 13px; color: #146C54; font-weight: 700">{{delta}}</span>
+      </div>
+      <div style="display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap">
+        <sc-for list="{{exs}}" as="x" hint-placeholder-count="3">
+          <button type="button" onClick="{{x.pick}}" aria-pressed="{{x.pressed}}" style="{{x.style}}">{{x.label}}</button>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; align-items: end; height: 150px; margin-top: 14px" role="img" aria-label="{{chartLabel}}">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="6">
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%">
+            <span style="font-size: 12px; font-weight: 700; color: #2E3A33">{{b.v}}</span>
+            <div style="{{b.style}}"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 6px" aria-hidden="true">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="6">
+          <span style="text-align: center; font-size: 11px; color: #4A5750">{{b.d}}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; margin-top: 10px">
+      <h2 style="margin: 0 0 8px; font-size: 15px; font-weight: 800">Частые ошибки</h2>
+      <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0"><span>Колени внутрь (присед)</span><span style="color: #146C54; font-weight: 700">реже на 40%</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0"><span>Таз провисает (планка)</span><span style="color: #4A5750; font-weight: 700">без изменений</span></div>
+    </div>
+
+    <a href="Reminders.dc.html" style="margin-top: 10px; min-height: 52px; border-radius: 20px; background: #E3ECE5; display: flex; align-items: center; gap: 12px; padding: 0 16px; text-decoration: none; color: #0B3D2F; font-weight: 700; font-size: 15px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1112 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10 21h4"></path></svg>
+      <span style="flex-grow: 1">Напоминания: пн, ср, пт в 19:00</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+    </a>
+  </div>
+
+  <nav aria-label="Основная навигация" style="height: 80px; flex-shrink: 0; background: #FFFFFF; border-top: 1px solid #E6EAE6; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding-top: 12px; box-sizing: border-box">
+    <a href="Home.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"></path></svg></span>Главная
+    </a>
+    <a href="Library.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"></path></svg></span>Упражнения
+    </a>
+    <a href="Progress.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #0B3D2F; font-size: 12px; font-weight: 700">
+      <span style="width: 64px; height: 32px; border-radius: 16px; background: #CFEBDD; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></span>Прогресс
+    </a>
+    <a href="Profile.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #4A5750; font-size: 12px; font-weight: 600">
+      <span style="width: 64px; height: 32px; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path></svg></span>Профиль
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { ex: 'all' };
+  }
+  renderVals() {
+    const ex = this.state.ex;
+    const data = {
+      all: [6.9, 7.2, 7.0, 7.6, 7.9, 8.1],
+      squat: [6.5, 7.0, 7.1, 7.8, 8.0, 8.4],
+      plank: [7.2, 7.3, 7.0, 7.4, 7.6, 7.7]
+    };
+    const days = ['12.10', '14.10', '16.10', '19.10', '21.10', '26.10'];
+    const vals = data[ex];
+    const diff = (vals[vals.length - 1] - vals[0]).toFixed(1).replace('.', ',');
+    const opts = [{ id: 'all', label: 'Все' }, { id: 'squat', label: 'Приседание' }, { id: 'plank', label: 'Планка' }];
+    return {
+      delta: '+' + diff + ' за 2 недели',
+      chartLabel: 'Оценки техники по тренировкам: ' + vals.map((v) => String(v).replace('.', ',')).join(', '),
+      exs: opts.map((o) => {
+        const on = o.id === ex;
+        return {
+          ...o, pressed: on ? 'true' : 'false',
+          style: 'min-height: 36px; padding: 0 12px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; ' + (on ? 'background: #CFEBDD; border: 0; color: #0B3D2F;' : 'background: transparent; border: 1px solid #A9B5AE; color: #14201A;'),
+          pick: () => this.setState({ ex: o.id })
+        };
+      }),
+      bars: vals.map((v, i) => ({
+        v: String(v).replace('.', ','),
+        d: days[i],
+        style: 'width: 100%; max-width: 32px; border-radius: 8px 8px 4px 4px; height: ' + Math.round((v - 5) / 5 * 120) + 'px; background: ' + (i === vals.length - 1 ? '#146C54' : '#9FCDB7') + ';'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

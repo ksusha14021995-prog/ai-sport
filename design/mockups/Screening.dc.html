@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — проверка здоровья</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 24px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0">
+    <a href="Signup.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -12px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px" aria-label="Шаг 2 из 5">
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; letter-spacing: -0.3px; flex-shrink: 0">Сначала — о здоровье</h1>
+  <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: #4A5750; flex-shrink: 0">9 коротких вопросов, чтобы тренировки были безопасными. Ответы видишь только ты.</p>
+
+  <div style="flex-grow: 1; min-height: 0; overflow-y: auto; margin: 16px -24px 0; padding: 0 24px 8px">
+    <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+      <sc-for list="{{qs}}" as="q" hint-placeholder-count="9">
+        <li style="background: #FFFFFF; border-radius: 18px; padding: 14px 14px 12px 16px">
+          <div style="font-size: 15px; line-height: 1.4; font-weight: 600" id="{{q.id}}">{{q.text}}</div>
+          <div role="group" aria-labelledby="{{q.id}}" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px">
+            <button type="button" onClick="{{q.no}}" aria-pressed="{{q.noPressed}}" style="{{q.noStyle}}">Нет</button>
+            <button type="button" onClick="{{q.yes}}" aria-pressed="{{q.yesPressed}}" style="{{q.yesStyle}}">Да</button>
+          </div>
+        </li>
+      </sc-for>
+    </ol>
+  </div>
+
+  <div style="flex-shrink: 0; padding-top: 12px">
+    <p style="margin: 0 0 12px; text-align: center; font-size: 13px; color: #56635C">Отвечено {{answered}} из 9</p>
+    <sc-if value="{{ready}}" hint-placeholder-val="{{ false }}">
+      <a href="{{nextHref}}" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Дальше</a>
+    </sc-if>
+    <sc-if value="{{notReady}}" hint-placeholder-val="{{ true }}">
+      <div aria-disabled="true" style="height: 56px; border-radius: 28px; background: #DDE3DE; color: #56635C; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center">Дальше</div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { answers: {} };
+  }
+  renderVals() {
+    const answers = this.state.answers;
+    const texts = [
+      'Говорил ли врач, что у вас проблемы с сердцем или повышенное давление?',
+      'Бывает ли боль в груди — в покое, в быту или при нагрузке?',
+      'Теряли ли вы сознание или равновесие из-за головокружения за последние 12 месяцев?',
+      'Есть ли у вас другое хроническое заболевание?',
+      'Принимаете ли вы лекарства на постоянной основе?',
+      'Есть ли проблемы с суставами, костями или мышцами, которые может усилить нагрузка?',
+      'Рекомендовал ли врач заниматься только под медицинским контролем?',
+      'Вам меньше 18 лет?',
+      'Вы беременны?'
+    ];
+    const btn = 'min-height: 44px; border-radius: 22px; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 700; ';
+    const off = 'background: #F5F6F2; border: 1px solid #C9D2CB; color: #14201A; margin: 1px;';
+    const set = (i, v) => this.setState({ answers: { ...answers, [i]: v } });
+    const qs = texts.map((text, i) => {
+      const a = answers[i];
+      return {
+        id: 'scr-q' + i, text,
+        no: () => set(i, 'no'), yes: () => set(i, 'yes'),
+        noPressed: a === 'no' ? 'true' : 'false', yesPressed: a === 'yes' ? 'true' : 'false',
+        noStyle: btn + (a === 'no' ? 'background: #CFEBDD; border: 2px solid #146C54; color: #0B3D2F;' : off),
+        yesStyle: btn + (a === 'yes' ? 'background: #FFE1D3; border: 2px solid #B4471E; color: #6B2510;' : off)
+      };
+    });
+    const answered = Object.keys(answers).length;
+    const anyYes = Object.values(answers).some((v) => v === 'yes');
+    return {
+      qs, answered,
+      ready: answered === texts.length,
+      notReady: answered < texts.length,
+      nextHref: anyYes ? 'Stop.dc.html' : 'Goal.dc.html'
+    };
+  }
+}
+</script>
+</body>
+</html>

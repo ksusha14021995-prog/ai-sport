@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — данные тела</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible,input:focus{outline:2px solid #146C54;outline-offset:1px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 24px 32px; overflow: hidden">
+  <div style="display: flex; align-items: center; gap: 12px">
+    <a href="Goal.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -12px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="flex-grow: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px" aria-label="Шаг 4 из 5">
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #146C54"></div>
+      <div style="height: 4px; border-radius: 2px; background: #C9D2CB"></div>
+    </div>
+  </div>
+
+  <h1 style="margin: 20px 0 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; line-height: 1.25; letter-spacing: -0.3px">Немного о тебе</h1>
+
+  <h2 style="margin: 24px 0 10px; font-size: 15px; font-weight: 700">Пол</h2>
+  <div role="group" aria-label="Пол" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+    <sc-for list="{{sexes}}" as="s" hint-placeholder-count="2">
+      <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="{{s.style}}">{{s.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 20px">
+    <label for="b-age" style="font-size: 15px; font-weight: 700">Возраст</label>
+    <input id="b-age" type="number" inputmode="numeric" value="31" style="height: 56px; box-sizing: border-box; border-radius: 16px; border: 1px solid #C9D2CB; background: #FFFFFF; padding: 0 16px; font-family: inherit; font-size: 16px; color: #14201A">
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px">
+    <h2 style="margin: 0; font-size: 15px; font-weight: 700">Рост и вес</h2>
+    <button type="button" onClick="{{toggleWhy}}" aria-expanded="{{whyAria}}" style="min-height: 36px; padding: 0 10px; border: 0; background: transparent; color: #146C54; font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 114 2c-1 .6-1.5 1-1.5 2M12 17h.01"></path></svg>Зачем?
+    </button>
+  </div>
+  <sc-if value="{{why}}" hint-placeholder-val="{{ false }}">
+    <p style="margin: 8px 0 0; background: #E3ECE5; border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.45; color: #1F3A2E">Чтобы точнее подобрать стартовую нагрузку и считать прогресс. Никому не показываем. Можно пропустить и добавить позже.</p>
+  </sc-if>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="b-h" style="font-size: 13px; font-weight: 600; color: #4A5750">Рост, см</label>
+      <input id="b-h" type="number" inputmode="numeric" placeholder="165" style="height: 56px; box-sizing: border-box; border-radius: 16px; border: 1px solid #C9D2CB; background: #FFFFFF; padding: 0 16px; font-family: inherit; font-size: 16px; color: #14201A">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="b-w" style="font-size: 13px; font-weight: 600; color: #4A5750">Вес, кг</label>
+      <input id="b-w" type="number" inputmode="numeric" placeholder="60" style="height: 56px; box-sizing: border-box; border-radius: 16px; border: 1px solid #C9D2CB; background: #FFFFFF; padding: 0 16px; font-family: inherit; font-size: 16px; color: #14201A">
+    </div>
+  </div>
+
+  <div style="flex-grow: 1"></div>
+  <p style="margin: 0 0 12px; text-align: center; font-size: 14px; color: #4A5750"><a href="Calibration.dc.html" style="font-weight: 700">Пропустить рост и вес</a></p>
+  <a href="Calibration.dc.html" style="flex-shrink: 0; height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center">Дальше</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sex: 'f', why: false };
+  }
+  renderVals() {
+    const { sex, why } = this.state;
+    return {
+      why, whyAria: why ? 'true' : 'false',
+      toggleWhy: () => this.setState({ why: !why }),
+      sexes: [{ id: 'f', label: 'Женский' }, { id: 'm', label: 'Мужской' }].map((o) => {
+        const on = o.id === sex;
+        return {
+          ...o, pressed: on ? 'true' : 'false',
+          style: 'min-height: 48px; border-radius: 24px; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 600; ' + (on ? 'background: #CFEBDD; border: 2px solid #146C54; color: #0B3D2F;' : 'background: #FFFFFF; border: 1px solid #C9D2CB; color: #14201A; margin: 1px;'),
+          pick: () => this.setState({ sex: o.id })
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

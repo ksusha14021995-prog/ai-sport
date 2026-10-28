@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>AI-sport — приседание</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#146C54}a:hover{color:#0B3D2F}
+button:focus-visible{outline:2px solid #146C54;outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F6F2; color: #14201A; font-family: Manrope, system-ui, sans-serif; display: flex; flex-direction: column; padding: 16px 20px 32px; overflow: hidden">
+  <a href="Library.dc.html" aria-label="Назад" style="width: 48px; height: 48px; margin-left: -8px; display: flex; align-items: center; justify-content: center; border-radius: 24px; color: #14201A">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+  </a>
+
+  <div style="margin-top: 8px; height: 200px; border-radius: 24px; background: #DCE6DE; position: relative; display: flex; align-items: center; justify-content: center">
+    <span style="position: absolute; left: 14px; top: 12px; font-size: 12px; font-weight: 600; color: #2E3A33">[Видео-инструкция, 20 сек]</span>
+    <button type="button" aria-label="Смотреть видео" style="width: 64px; height: 64px; border-radius: 32px; border: 0; background: #146C54; cursor: pointer; display: flex; align-items: center; justify-content: center">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+    </button>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 10px; margin-top: 16px">
+    <h1 style="margin: 0; font-family: Unbounded, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: -0.3px">Приседание</h1>
+    <span style="background: #CFEBDD; color: #0B3D2F; border-radius: 10px; padding: 4px 8px; font-size: 12px; font-weight: 700">ИИ-проверка</span>
+  </div>
+  <div style="font-size: 14px; color: #4A5750; margin-top: 4px">Бёдра, ягодицы, кор · без инвентаря</div>
+
+  <div style="margin-top: 12px; background: #E3ECE5; border-radius: 14px; padding: 10px 14px; font-size: 13px; line-height: 1.4; color: #1F3A2E">
+    <b>Твоя норма сейчас:</b> 3 подхода по 12 — по итогам проверки
+  </div>
+
+  <div role="tablist" aria-label="Разделы" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px; border-bottom: 1px solid #D5DCD6">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="2">
+      <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <ol style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+      <li style="display: flex; gap: 12px; align-items: flex-start">
+        <span style="{{r.badge}}">{{r.mark}}</span>
+        <span style="font-size: 15px; line-height: 1.45; padding-top: 3px">{{r.text}}</span>
+      </li>
+    </sc-for>
+  </ol>
+
+  <div style="flex-grow: 1"></div>
+  <a href="CameraSetup.dc.html" style="height: 56px; border-radius: 28px; background: #146C54; color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V5a2 2 0 012-2h3M16 3h3a2 2 0 012 2v3M21 16v3a2 2 0 01-2 2h-3M8 21H5a2 2 0 01-2-2v-3"></path><circle cx="12" cy="12" r="3"></circle></svg>
+    Проверить технику
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'how' };
+  }
+  renderVals() {
+    const tab = this.state.tab;
+    const how = [
+      'Стопы на ширине плеч, носки чуть развёрнуты',
+      'Отведи таз назад, будто садишься на стул',
+      'Колени идут по линии носков',
+      'Опустись до 90° и поднимайся через пятки'
+    ];
+    const errs = [
+      'Колени заваливаются внутрь',
+      'Пятки отрываются от пола',
+      'Спина округляется внизу',
+      'Корпус слишком сильно наклоняется вперёд'
+    ];
+    const isHow = tab === 'how';
+    const badge = 'width: 28px; height: 28px; border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; ';
+    return {
+      tabs: [{ id: 'how', label: 'Как делать' }, { id: 'err', label: 'Частые ошибки' }].map((t) => {
+        const on = t.id === tab;
+        return {
+          ...t, selected: on ? 'true' : 'false',
+          style: 'min-height: 48px; border: 0; background: transparent; cursor: pointer; font-family: inherit; font-size: 15px; font-weight: 700; margin-bottom: -1px; ' + (on ? 'color: #0B3D2F; border-bottom: 3px solid #146C54;' : 'color: #4A5750; border-bottom: 3px solid transparent;'),
+          pick: () => this.setState({ tab: t.id })
+        };
+      }),
+      rows: (isHow ? how : errs).map((text, i) => ({
+        text,
+        mark: isHow ? String(i + 1) : '!',
+        badge: badge + (isHow ? 'background: #E3ECE5; color: #0B3D2F;' : 'background: #FFE1D3; color: #B4471E;')
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
