@@ -1,16 +1,18 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+
+import 'app.dart';
+import 'data/plans/template_plan_builder.dart';
 
 void main() {
-  runApp(const MainApp());
+  LicenseRegistry.addLicense(_fontLicenses);
+  runApp(AiSportApp(planBuilder: TemplatePlanBuilder()));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
-    );
+Stream<LicenseEntry> _fontLicenses() async* {
+  for (final family in const ['Manrope', 'Unbounded']) {
+    final text = await rootBundle.loadString('assets/fonts/OFL-$family.txt');
+    yield LicenseEntryWithLineBreaks([family], text);
   }
 }
