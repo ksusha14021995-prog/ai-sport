@@ -1,0 +1,37 @@
+{
+  "id": "tone-beginner",
+  "title": "Тонус с нуля",
+  "goals": ["tone", "loseWeight", "endurance"],
+  "levels": ["beginner"],
+  "experience": { "from": "none", "to": "from6To24Months" },
+  "sessionsPerWeek": [2, 3],
+  "minutesPerSession": [15, 30],
+  "weeks": 8,
+  "progression": "Каждые 2 недели +2 повтора в приседаниях и мостике, +5 сек в планке. Через 2 недели — повторная проверка.",
+  "exercises": [
+    {
+      "exerciseId": "squat",
+      "title": "Приседания",
+      "sets": 3,
+      "reps": { "from": "squatReps", "factor": 0.5, "min": 8, "max": 20 }
+    },
+    {
+      "exerciseId": "glute_bridge",
+      "title": "Ягодичный мостик",
+      "sets": 3,
+      "reps": 12
+    },
+    {
+      "exerciseId": "pushup",
+      "title": "Отжимания",
+      "sets": 3,
+      "reps": { "from": "pushupReps", "factor": 0.65, "min": 4, "max": 15 }
+    },
+    {
+      "exerciseId": "plank",
+      "title": "Планка",
+      "sets": 3,
+      "holdSeconds": { "from": "plankSeconds", "factor": 0.7, "min": 15, "max": 60 }
+    }
+  ]
+}

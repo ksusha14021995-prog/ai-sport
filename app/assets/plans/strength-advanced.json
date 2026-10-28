@@ -1,0 +1,37 @@
+{
+  "id": "strength-advanced",
+  "title": "Сила: продвинутый уровень",
+  "goals": ["getStronger", "gainMass", "endurance"],
+  "levels": ["advanced"],
+  "experience": { "from": "from6To24Months", "to": "over2Years" },
+  "sessionsPerWeek": [3, 4, 5],
+  "minutesPerSession": [45, 60],
+  "weeks": 12,
+  "progression": "Каждые 2 недели +1 подход или +3 повтора; планка до 2 минут.",
+  "exercises": [
+    {
+      "exerciseId": "squat",
+      "title": "Приседания",
+      "sets": 5,
+      "reps": { "from": "squatReps", "factor": 0.5, "min": 15, "max": 30 }
+    },
+    {
+      "exerciseId": "lunge",
+      "title": "Выпады назад (на каждую ногу)",
+      "sets": 4,
+      "reps": { "from": "squatReps", "factor": 0.3, "min": 10, "max": 20 }
+    },
+    {
+      "exerciseId": "pushup",
+      "title": "Отжимания",
+      "sets": 5,
+      "reps": { "from": "pushupReps", "factor": 0.7, "min": 10, "max": 35 }
+    },
+    {
+      "exerciseId": "plank",
+      "title": "Планка",
+      "sets": 3,
+      "holdSeconds": { "from": "plankSeconds", "factor": 0.8, "min": 45, "max": 120 }
+    }
+  ]
+}

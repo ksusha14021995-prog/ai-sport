@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "plan-template.schema.json",
+  "title": "Шаблон тренировочного плана AI-sport",
+  "description": "Один файл = один шаблон плана. Положи новый .json рядом в assets/plans/ — приложение подхватит его само. Приложение выбирает шаблон по правилам: сначала уровень, потом опыт, потом сколько целей совпало, потом дни и минуты; при равенстве — по id по алфавиту. Дни в неделю и минуты в итоговом плане берутся из ответов пользователя (дни — не больше максимума шаблона).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "goals", "levels", "experience", "sessionsPerWeek", "minutesPerSession", "weeks", "exercises"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Уникальный код шаблона латиницей через дефис, лучше совпадает с именем файла. Пример: tone-beginner."
+    },
+    "title": {
+      "type": "string",
+      "description": "Название плана, которое увидит пользователь. Пример: «Тонус с нуля»."
+    },
+    "goals": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Каким целям подходит план. loseWeight — снизить вес, gainMass — набрать массу, getStronger — стать сильнее, endurance — повысить выносливость, tone — повысить общий тонус.",
+      "items": { "enum": ["loseWeight", "gainMass", "getStronger", "endurance", "tone"] }
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Для каких стартовых уровней план. beginner — начальный, intermediate — средний, advanced — продвинутый. Уровень приложение считает само по опыту и калибровке.",
+      "items": { "$ref": "#/$defs/level" }
+    },
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to"],
+      "description": "Диапазон опыта, для которого план (включительно). none — не тренируется, under6Months — до 6 мес, from6To24Months — 6–24 мес, over2Years — больше 2 лет.",
+      "properties": {
+        "from": { "$ref": "#/$defs/experience", "description": "С какого опыта." },
+        "to": { "$ref": "#/$defs/experience", "description": "По какой опыт (не раньше, чем from)." }
+      }
+    },
+    "sessionsPerWeek": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Сколько тренировок в неделю допускает план. Если пользователь выбрал больше максимума — в плане будет максимум. 5 означает «5+».",
+      "items": { "enum": [2, 3, 4, 5] }
+    },
+    "minutesPerSession": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Для какой длительности тренировки план рассчитан (влияет только на выбор шаблона; в плане — минуты пользователя).",
+      "items": { "enum": [15, 30, 45, 60] }
+    },
+    "weeks": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Длительность плана в неделях. Пример: 8."
+    },
+    "progression": {
+      "type": "string",
+      "description": "Необязательно. Как увеличивать нагрузку по ходу плана, свободным текстом."
+    },
+    "exercises": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Упражнения тренировки в порядке выполнения. exerciseId не должен повторяться.",
+      "items": { "$ref": "#/$defs/exercise" }
+    }
+  },
+  "$defs": {
+    "level": { "enum": ["beginner", "intermediate", "advanced"] },
+    "experience": { "enum": ["none", "under6Months", "from6To24Months", "over2Years"] },
+    "exercise": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exerciseId", "title", "sets"],
+      "oneOf": [
+        { "required": ["reps"] },
+        { "required": ["holdSeconds"] }
+      ],
+      "description": "Одно упражнение. Заполни ровно одно из полей: reps (повторы) или holdSeconds (удержание в секундах).",
+      "properties": {
+        "exerciseId": {
+          "enum": ["squat", "pushup", "plank", "lunge", "glute_bridge"],
+          "description": "Код упражнения: squat — приседания, pushup — отжимания, plank — планка, lunge — выпады, glute_bridge — ягодичный мостик. Для pushup приложение само подставит «Отжимания с колен», если пользователь калибровался с колен или сделал меньше 5 от пола."
+        },
+        "title": {
+          "type": "string",
+          "description": "Название упражнения для пользователя."
+        },
+        "sets": {
+          "description": "Число подходов: одно число для всех уровней (3) или отдельно по уровням ({\"intermediate\": 3, \"advanced\": 4}). Если уровня пользователя нет в списке — берётся ближайший.",
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "beginner": { "type": "integer", "minimum": 1 },
+                "intermediate": { "type": "integer", "minimum": 1 },
+                "advanced": { "type": "integer", "minimum": 1 }
+              }
+            }
+          ]
+        },
+        "reps": { "$ref": "#/$defs/dose", "description": "Повторов в подходе." },
+        "holdSeconds": { "$ref": "#/$defs/dose", "description": "Секунд удержания в подходе (округляется до 5 сек)." },
+        "progression": {
+          "type": "string",
+          "description": "Необязательно. Как прогрессировать именно в этом упражнении."
+        }
+      }
+    },
+    "dose": {
+      "description": "Норма: фиксированное число (12) или доля от результата калибровки.",
+      "oneOf": [
+        { "type": "integer", "minimum": 1, "description": "Одинаково для всех, например 12." },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["from", "factor", "min", "max"],
+          "description": "Норма = округлить(результат калибровки × factor), но не меньше min и не больше max. Если пользователю было тяжело (8–10 из 10) — норма дополнительно ×0.8. Пример: 24 приседания × 0.5 = 12.",
+          "properties": {
+            "from": {
+              "enum": ["squatReps", "pushupReps", "plankSeconds"],
+              "description": "От какого результата калибровки считать: squatReps — приседания за 60 сек, pushupReps — отжимания до отказа, plankSeconds — секунды планки."
+            },
+            "factor": { "type": "number", "exclusiveMinimum": 0, "description": "Доля от результата, например 0.5 = половина." },
+            "min": { "type": "integer", "minimum": 1, "description": "Не меньше этого." },
+            "max": { "type": "integer", "minimum": 1, "description": "Не больше этого (не меньше min)." }
+          }
+        }
+      ]
+    }
+  }
+}

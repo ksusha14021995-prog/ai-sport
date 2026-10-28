@@ -1,0 +1,37 @@
+{
+  "id": "fat-loss-intermediate",
+  "title": "Жиросжигание и выносливость",
+  "goals": ["loseWeight", "endurance", "tone"],
+  "levels": ["intermediate", "advanced"],
+  "experience": { "from": "under6Months", "to": "over2Years" },
+  "sessionsPerWeek": [3, 4, 5],
+  "minutesPerSession": [30, 45],
+  "weeks": 8,
+  "progression": "Каждую неделю +1 повтор в каждом подходе; планка +5 сек раз в 2 недели.",
+  "exercises": [
+    {
+      "exerciseId": "squat",
+      "title": "Приседания",
+      "sets": { "intermediate": 3, "advanced": 4 },
+      "reps": { "from": "squatReps", "factor": 0.6, "min": 12, "max": 30 }
+    },
+    {
+      "exerciseId": "lunge",
+      "title": "Выпады назад (на каждую ногу)",
+      "sets": { "intermediate": 3, "advanced": 4 },
+      "reps": { "from": "squatReps", "factor": 0.3, "min": 8, "max": 15 }
+    },
+    {
+      "exerciseId": "pushup",
+      "title": "Отжимания",
+      "sets": { "intermediate": 3, "advanced": 4 },
+      "reps": { "from": "pushupReps", "factor": 0.6, "min": 6, "max": 25 }
+    },
+    {
+      "exerciseId": "plank",
+      "title": "Планка",
+      "sets": 3,
+      "holdSeconds": { "from": "plankSeconds", "factor": 0.7, "min": 20, "max": 90 }
+    }
+  ]
+}
