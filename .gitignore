@@ -6,3 +6,8 @@ __pycache__/
 .idea/
 .vscode/
 *.ipa
+
+# локальные заметки для ИИ-ассистентов
+CLAUDE.md
+.claude/
+AGENTS.md
